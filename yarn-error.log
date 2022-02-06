@@ -1,0 +1,60 @@
+Arguments: 
+  /usr/local/bin/node /usr/local/bin/yarn
+
+PATH: 
+  /usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Apple/usr/bin
+
+Yarn version: 
+  1.22.10
+
+Node version: 
+  14.15.1
+
+Platform: 
+  darwin x64
+
+Trace: 
+  SyntaxError: /Users/hunter/Campaign-Contract/package.json: Unexpected token } in JSON at position 837
+      at JSON.parse (<anonymous>)
+      at /usr/local/lib/node_modules/yarn/lib/cli.js:1625:59
+      at Generator.next (<anonymous>)
+      at step (/usr/local/lib/node_modules/yarn/lib/cli.js:310:30)
+      at /usr/local/lib/node_modules/yarn/lib/cli.js:321:13
+
+npm manifest: 
+  {
+    "name": "Campaign-Contract",
+    "version": "1.0.0",
+    "main": "index.js",
+    "dependencies": {
+      "@truffle/hdwallet-provider": "^2.0.0",
+      "ganache-cli": "^6.12.2",
+      "mocha": "^9.1.3",
+      "solc": "0.4.17",
+      "web3": "1.0.0-beta.26"
+    },
+    "devDependencies": {
+      "@types/jest": "~27.0.2",
+      "@types/node": "~16.11.6",
+      "@typescript-eslint/eslint-plugin": "~5.7.0",
+      "@typescript-eslint/parser": "~5.7.0",
+      "eslint": "~8.4.1",
+      "eslint-config-prettier": "~8.3.0",
+      "eslint-plugin-jest": "~25.3.0",
+      "jest": "~27.4.4",
+      "prettier": "~2.5.1",
+      "rimraf": "~3.0.2",
+      "ts-jest": "~27.1.1",
+      "tsutils": "~3.21.0",
+      "typescript": "~4.5.3"
+    },
+    "repository": "https://github.com/ripu2/Campaign-Contract.git",
+    "author": "Ripudaman <44752831+ripu2@users.noreply.github.com>",
+    "license": "MIT",
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
