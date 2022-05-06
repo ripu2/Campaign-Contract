@@ -59,7 +59,6 @@ contract Campaign {
 
     function createRequest(uint rquestAmount, string description, address recipient)
         public onlyManagerAccess payable{
-            require(rquestAmount < address(this).balance);
             Request memory newRequest = Request({
                 description: description,
                 value: rquestAmount,

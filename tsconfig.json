@@ -6,6 +6,6 @@
     },
     // 👇️ also include your test files in the `include` array
     // if they are outside of the `src` directory
-    "include": ["src/**/*"],
+    "include": ["src/**/*", "test", "__test__"],
     "exclude": ["node_modules"]
 }
