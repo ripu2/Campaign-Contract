@@ -16,14 +16,18 @@ const deploy = async () => {
     if (accounts) {
         console.log('Attempting to deploy form =====>', accounts[0], '🚀')
 
-        const res = await new web3.eth.Contract(JSON.parse(campaignFactory.interface))
+        try {
+            const res = await new web3.eth.Contract(JSON.parse(campaignFactory.interface))
             .deploy({ data: campaignFactory.bytecode })
-            .send({ gas: '1000000', from: accounts[0] })
+            .send({ gas: '10000000', from: accounts[0] })
 
         if (res) {
             console.log('interface ====>', campaignFactory.interface)
             console.log('Contract deployed at ===>', res.options.address, '🔥');
             provider.engine.stop()
+        }
+        } catch (error) {
+            console.log('errr =====>', error)
         }
     } else {
         console.log('failed to deploy contract ☹️')
