@@ -4,8 +4,8 @@ contract CampaignFactory {
 
     address[] public deployedCampaigns;
 
-    function createCampaign(uint minCon, uint minFund) public{
-        address newCampaign = new Campaign(minCon, minFund, msg.sender);
+    function createCampaign(string name, string description, string imageUrl, uint minCon, uint minFund) public{
+        address newCampaign = new Campaign(name, description, imageUrl, minCon, minFund, msg.sender);
         deployedCampaigns.push(newCampaign);
     }
 
@@ -25,6 +25,17 @@ contract Campaign {
         mapping(address => bool) approlversList;
     }
 
+    struct ContractInterface{
+        string name;
+        string description;
+        string imageUrl;
+        uint minimumFund;
+        uint minimumContribution;
+        uint donorsCount;
+        uint approveCount;
+        uint amountCollected;
+    }
+
     address public manager;
     uint public minimumFund;
     uint public minimumContribution;
@@ -32,16 +43,26 @@ contract Campaign {
     mapping(address => bool) public approvers;
     uint public donorCount;
     Request[] public requests;
+    ContractInterface public campaign;
 
     modifier onlyManagerAccess(){
         require(msg.sender == manager);
         _;
     }
     
-    function Campaign(uint minContribution, uint minFund, address creator) public {
+    function Campaign(string name, string description, string imageUrl, uint minContribution, uint minFund, address creator) public {
         manager = creator;
-        minimumContribution = minContribution;
-        minimumFund = minFund;
+        ContractInterface memory newCampaign = ContractInterface({
+            minimumContribution: minContribution,
+            minimumFund: minFund,
+            name: name,
+            description: description,
+            imageUrl: imageUrl,
+            donorsCount: 0,
+            approveCount: 0,
+            amountCollected: 0
+        });
+        campaign = newCampaign;
     }
     // function Campaign(uint minContribution, uint minFund) public {
     //     manager = msg.sender;
@@ -54,6 +75,8 @@ contract Campaign {
             require(msg.sender != manager);
                 donors[msg.sender] = true;
                 donorCount++;
+                campaign.donorsCount++;
+                campaign.amountCollected = msg.value;
     }
 
 
@@ -79,6 +102,7 @@ contract Campaign {
             require(!request.approlversList[msg.sender]);
                 request.approlversList[msg.sender] = true;
                 request.approvalCount++;
+                campaign.approveCount++;
 
     }
 

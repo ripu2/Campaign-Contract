@@ -3,7 +3,7 @@ const ganache = require('ganache-cli')
 
 const Web3 = require('web3')
 
-const web3 = new Web3(ganache.provider());
+const web3 = new Web3(ganache.provider({ gasLimit: 1000000000000 }));
 
 const compiledFactory = require('../src/etherum/build/CampaignFactory.json');
 const compiledCompaign = require('../src/etherum/build/Campaign.json');
@@ -15,15 +15,16 @@ let campaign;
 
 beforeEach(async () => {
     accounts = await web3.eth.getAccounts()
+    console.log('balance =====>', await web3.eth.getBalance(accounts[0]))
+    console.log('balance1 =====>', await web3.eth.getBalance(accounts[1]))
 
     factory = await new web3.eth.Contract(JSON.parse(compiledFactory.interface))
         .deploy({ data: compiledFactory.bytecode })
-        .send({ from: accounts[0], gas: '1000000' })
-
-    await factory.methods.createCampaign('100', '10000')
+        .send({ from: accounts[0], gas: '100000000' })
+    await factory.methods.createCampaign("Electric Car", "Buy elon musk", "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.cardekho.com%2Ftesla%2Fmodel-s%2Fpictures&psig=AOvVaw2rUHU8eBuoBGDkphLLQYot&ust=1651992600536000&source=images&cd=vfe&ved=0CAwQjRxqFwoTCLi9gpPmzPcCFQAAAAAdAAAAABADy", '100', '10000')
         .send({
             from: accounts[0],
-            gas: '1000000'
+            gas: '1000000000'
         });
 
     [campaignAddress] = await factory.methods.getDeployedCampigns().call();
@@ -53,7 +54,6 @@ describe('Campaign', () => {
             assert(err)
         }
     })
-
     it("allow people to contribute and check account is donor or not", async () => {
         await campaign.methods.contribute().send({
             value: 110,
@@ -92,7 +92,7 @@ describe('Campaign', () => {
         await campaign.methods.
             approveRequest(0).send({
                 from: accounts[1],
-                gas: '1000000'
+                gas: '10000000000'
             })
         
         console.log('reqqq =====>',await campaign.methods.requests(0).call())
@@ -100,7 +100,7 @@ describe('Campaign', () => {
         await campaign.methods.
         finalizeTransaction(0).send({
             from:accounts[0],
-            gas: '1000000'
+            gas: '10000000000'
         })
 
         let bal = await web3.eth.getBalance(accounts[2])
