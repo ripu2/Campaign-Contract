@@ -64,14 +64,9 @@ contract Campaign {
         });
         campaign = newCampaign;
     }
-    // function Campaign(uint minContribution, uint minFund) public {
-    //     manager = msg.sender;
-    //     minimumContribution = minContribution;
-    //     minimumFund = minFund;
-    // }
     
     function contribute() public payable{
-        require(msg.value >= minimumContribution);
+        require(msg.value >= ContractInterfaceminimumContribution);
             require(msg.sender != manager);
                 donors[msg.sender] = true;
                 donorCount++;

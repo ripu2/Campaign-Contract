@@ -15,8 +15,6 @@ let campaign;
 
 beforeEach(async () => {
     accounts = await web3.eth.getAccounts()
-    console.log('balance =====>', await web3.eth.getBalance(accounts[0]))
-    console.log('balance1 =====>', await web3.eth.getBalance(accounts[1]))
 
     factory = await new web3.eth.Contract(JSON.parse(compiledFactory.interface))
         .deploy({ data: compiledFactory.bytecode })
@@ -55,11 +53,13 @@ describe('Campaign', () => {
         }
     })
     it("allow people to contribute and check account is donor or not", async () => {
+        console.log('boforeee ====>')
         await campaign.methods.contribute().send({
             value: 110,
-            from: accounts[1]
+            from: accounts[1],
+            gas: '1000000'
         })
-
+        console.log('afterr ====>')
         const isContributer = campaign.methods.donors(accounts[1]).call()
         assert(isContributer)
     })
@@ -78,7 +78,8 @@ describe('Campaign', () => {
     it("approve request", async() => {
         await campaign.methods.contribute().send({
             value: web3.utils.toWei('10', 'ether'),
-            from: accounts[1]
+            from: accounts[1],
+            gas: '1000000'
         })
 
         await campaign.methods.
