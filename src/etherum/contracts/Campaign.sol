@@ -66,7 +66,7 @@ contract Campaign {
     }
     
     function contribute() public payable{
-        require(msg.value >= ContractInterfaceminimumContribution);
+        require(msg.value >= campaign.minimumContribution);
             require(msg.sender != manager);
                 donors[msg.sender] = true;
                 donorCount++;
