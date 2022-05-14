@@ -71,7 +71,7 @@ contract Campaign {
                 donors[msg.sender] = true;
                 donorCount++;
                 campaign.donorsCount++;
-                campaign.amountCollected = msg.value;
+                campaign.amountCollected += msg.value;
     }
 
 
