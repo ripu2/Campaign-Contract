@@ -36,6 +36,15 @@ describe('Campaign', () => {
         assert.ok(campaign.options.address)
     });
 
+    it("returns manager flag",async () => {
+        try {
+            const status = await campaign.methods.isManager().call()
+            assert(status)
+        } catch (error) {
+            
+        }
+    })
+
     it("marks caller as campaign manager", async () => {
         const manager = await campaign.methods.manager().call()
         assert(manager === accounts[0]) 

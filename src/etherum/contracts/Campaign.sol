@@ -109,4 +109,8 @@ contract Campaign {
                 request.complete = true;
     }
 
+    function isManager() public view returns(bool){
+        return msg.sender == manager;
+    }
+
 }
